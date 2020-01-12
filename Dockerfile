@@ -31,10 +31,8 @@ RUN apt install -y python3-pip &&\
 COPY . /app
 RUN cd /app &&\
     pipenv install --dev --ignore-pipfile
+RUN pipenv run python -m unittest discover --verbose . "test_*"
 
 # Run tests
 WORKDIR /app
-
-RUN pipenv run python -m unittest discover --verbose . "test_*"
-
 ENTRYPOINT ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "80"]
