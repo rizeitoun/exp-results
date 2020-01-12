@@ -28,10 +28,9 @@ RUN apt install -y python3-pip &&\
     pip3 install pipenv
 
 # Add application to app folder and install environment
-COPY start_flask.sh /usr/local/bin/
 COPY . /app
 RUN cd /app &&\
-    pipenv install  --system --dev --ignore-pipfile
+    pipenv install --dev --ignore-pipfile
 
 # Run tests
 WORKDIR /app
