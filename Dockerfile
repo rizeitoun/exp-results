@@ -33,5 +33,9 @@ COPY . /app
 RUN cd /app &&\
     pipenv install  --system --dev --ignore-pipfile
 
+# Run tests
 WORKDIR /app
+
+RUN pipenv run python -m unittest discover --verbose . "*_test.py"
+
 ENTRYPOINT ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "80"]
