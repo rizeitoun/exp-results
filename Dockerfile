@@ -36,6 +36,6 @@ RUN cd /app &&\
 # Run tests
 WORKDIR /app
 
-RUN pipenv run python -m unittest discover --verbose . "*_test.py"
+RUN pipenv run python -m unittest discover --verbose . "test_*"
 
 ENTRYPOINT ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "80"]
