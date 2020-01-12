@@ -3,6 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - REPOSITORY_URI=359042822489.dkr.ecr.us-east-1.amazonaws.com/exp-results
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
