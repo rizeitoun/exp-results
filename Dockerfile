@@ -26,7 +26,6 @@ RUN cd usr/src &&\
 # Get pip and pip-env
 RUN apt install -y python3-pip &&\
     pip3 install pipenv &&\
-    apt-get install -y pylint
 
 # Add application to app folder and install environment
 COPY . /app
@@ -35,7 +34,7 @@ RUN cd /app &&\
 
 # Run tests
 WORKDIR /app
-RUN pipenv run python -m unittest discover --verbose . "test_*" &&\
-    touch __init__.py; pipenv run pylint $(pwd); rm __init__.py
+#RUN pipenv run python -m unittest discover --verbose . "test_*" &&\
+#    touch __init__.py; pipenv run pylint $(pwd); rm __init__.py
 
 ENTRYPOINT ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "80"]

@@ -6,15 +6,12 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - CONTAINER_NAME=exp-results
       - REPOSITORY_URI="359042822489.dkr.ecr.us-east-1.amazonaws.com/"$CONTAINER_NAME
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - echo $IMAGE_TAG
   build:
     commands:
-      - echo Pulling the Docker File
-      - docker pull $REPOSITORY_URI:latest
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
@@ -23,9 +20,8 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"name":"%s","imageUri":"%s"}]' "Exp_Results_Container" $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' $NAME $REPOSITORY_URI:$IMAGE_TAG > build_definitions.json
 
 artifacts:
-  files: imagedefinitions.json
+  files: build_definitions.json
