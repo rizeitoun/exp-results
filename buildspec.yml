@@ -25,4 +25,4 @@ phases:
       - printf '[{"name":"%s","imageUri":"%s"}]' $NAME $REPOSITORY_URI:$IMAGE_TAG > build_definitions.json
 
 artifacts:
-  files: build_definitions.json
+  files: imagedefinitions.json

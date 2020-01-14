@@ -34,9 +34,5 @@ RUN cd /app &&\
 
 # Run tests
 WORKDIR /app
-# RUN pipenv run python -m unittest discover --verbose . "test_*" &&\
-#    touch __init__.py; pipenv run pylint $(pwd); rm __init__.py
-
-
 
 ENTRYPOINT ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "80"]
