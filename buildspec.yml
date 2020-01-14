@@ -6,7 +6,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI="359042822489.dkr.ecr.us-east-1.amazonaws.com/"$CONTAINER_NAME
+      - REPOSITORY_URI=$REPO_BASE"/"$CONTAINER_NAME
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - echo $IMAGE_TAG
@@ -22,7 +22,7 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:latest
-      - printf '[{"name":"%s","imageUri":"%s"}]' $NAME $REPOSITORY_URI:$IMAGE_TAG > build_definitions.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' $NAME $REPOSITORY_URI:$IMAGE_TAG > $FILENAME
 
 artifacts:
-  files: imagedefinitions.json
+  files: $FILENAME
