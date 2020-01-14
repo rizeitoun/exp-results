@@ -1,5 +1,6 @@
 import unittest
-import app
+from exp_results import app
+
 
 class TestStringMethods(unittest.TestCase):
 
