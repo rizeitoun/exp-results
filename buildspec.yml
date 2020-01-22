@@ -8,9 +8,8 @@ phases:
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - REPOSITORY_URI=$REPO_BASE"/"$CONTAINER_NAME
       - echo $CODEBUILD_SOURCE_VERSION
-      - echo $CODEBUILD_SRC_DIR
-      - echo $CODEBUILD_WEBHOOK_HEAD_REF
-      - echo $CODEBUILD_WEBHOOK_EVENT
+      - echo $CODEBUILD_SOURCE_REPO_URL
+      - REPOSITORY_URI=$CODEBUILD_WEBHOOK_EVENT
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - echo $IMAGE_TAG
