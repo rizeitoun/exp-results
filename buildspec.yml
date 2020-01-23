@@ -10,12 +10,9 @@ phases:
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - REPOSITORY_URI=$REPO_BASE"/"$CONTAINER_NAME
-      - echo $REPOSITORY_URI
-      - REPO_BASE=$(echo $CODEBUILD_SOURCE_VERSION | cut -d"/" -f2)
-      - REPOSITORY_URI=$REPO_BASE"/"$CONTAINER_NAME
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - echo $IMAGE_TAG
+      - echo "Container saved to "$REPOSITORY_URI":"$IMAGE_TAG
   build:
     commands:
       - echo Build started on `date`
